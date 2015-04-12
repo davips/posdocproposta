@@ -20,20 +20,18 @@ A proposta deste projeto é manter esse conjunto de estratégias já implementad
 como as alternativas possíveis do usuário.
 Mais precisamente, será considerado cada par estratégia-algoritmo como
 uma alternativa.
-O objetivo primário é explorar as possibilidades de recomendação automática
-desses pares por meio da aplicação de meta-aprendizado.
-Adicionalmente, espera-se investigar as seguintes questões:
+
+\textbf{O objetivo primário é explorar as possibilidades de recomendação automática
+desses pares por meio da aplicação de meta-aprendizado.}
+
+Especificamente, espera-se investigar as seguintes questões:
 \begin{compactenum}
-\item{Quais são as implicações do uso de meta-aprendizado?
-Ele pode representar uma \textit{quebra de paradigma}
-
-\textit{isso resolve todos os problemas colocados na introdução: se deve ser agnostica ou gnostica, qual estratégia
-específica
-e qual variante da estratégia (métrica de distância, etc.)}
-
-posso falar da abordagem por
-ranking e por vencedor
-}
+\item{Quais são as implicações do uso de meta-aprendizado?}
+\item{Ele pode representar uma \textit{quebra de paradigma} na área \citep{kuhn2012structure}?}
+\item{Existe um subconjunto ideal de estratégias a se considerar?}
+\item{Qual o efeito no meta-aprendizado apenas para agnósticas (ou gnósticas)?}
+\item{Qual tipo de recomendação é mais adequado: 
+predição de ranqueamento, predição da vencedora, predição de desempenho ou outro?}
 \end{compactenum}
 
 \subsection{Infraestrutura}
@@ -46,22 +44,19 @@ das unidades de Computação, Física e Engenharia do Campus de São Carlos.
 
 \subsection{Metodologia}
 As técnicas desenvolvidas no projeto serão investigadas
-experimentalmente e avaliadas quanto à viabilidade na recomendação
-de estratégias.
-Serão empregadas métodos quantitativos com nível de confiança estatística
-na avaliação \citep{Bishop2006}.
+experimentalmente e avaliadas principalmente quanto à viabilidade na recomendação
+automática de estratégias.
+Serão empregadas métodos quantitativos amplamente aceitos na literatura de aprendizado de máquina \citep{Bishop2006} e testes estatísticos
+como o teste de Friedman/Nemenyi \citep{journals/jmlr/Demsar06}.
 
 \subsection{Orçamento}
-??????????????????????????????????
-editar esta seção
-???????????????????????
-Nesta proposta, solicitam-se recursos para a aquisição de material permanente,
+Recursos financeiros são necessários para a aquisição de material permanente,
 passagens, diárias e material bibliográfico.
 O material permanente se refere aos equipamentos necessários para incrementar a
-base de computadores instalados no BIOCOM. As passagens e diárias são para a
-participação em conferências e congressos relevantes à linha de pesquisa deste projeto.
-O material bibliográfico é para a atualização do acervo bibliográfico da biblioteca do
-ICMC.
+base de computadores instalados no laboratório do grupo de pesquisa.
+As passagens e diárias viabilizarão a participação em conferências e congressos relevantes à linha de pesquisa deste projeto.
+O material bibliográfico contribuirá para a atualização do acervo bibliográfico do
+instituto.
 
 \begin{table}[!htp]
 \centering
@@ -90,31 +85,27 @@ Material bibliográfico & 1.000,00 \\
 \end{table}
 
 \subsection{Plano de atividades}
-??????????????????????????????????
-editar esta seção
-???????????????????????
 As atividades previstas para a execução deste projeto de doutorado são as seguintes:
 
 \begin{compactenum}
 
-\item{\textbf{Pesquisa bibliográfica.} Pesquisa bibliográfica com o objetivo de atualizar os conhecimentos sobre o
-tema investigado e estudar alternativas para cumprir os objetivos apontados.}
+\item{\textbf{Pesquisa bibliográfica.} Pesquisa bibliográfica com o objetivo de
+monitorar o surgimento de eventuais publicações que conciliem aprendizado ativo e meta-aprendizado. Atualização de conhecimentos e estudo de alternativas para cumprir os objetivos apontados.}
 
-\item{\textbf{Implementação das técnicas estudadas.} A partir da pesquisa bibliográfica mais acurada, abordagens adequadas serão desenvolvidas para integrar meta-aprendizado à seleção de atributos, composição de \textit{ensembles} e otimização de parâmetros de algoritmos de AM.}
+\item{\textbf{Implementação de técnicas.} A partir da pesquisa bibliográfica, é possível que novas estratégias se mostrem interessantes do ponto de 
+vista de sua representatividade e contribuição para a diversidade de opções
+do sistema de recomendação. Elas podem ser implementadas para integrar o sistema de meta-aprendizado.}
 
-\item{\textbf{Experimentação e validação.} Por meio da metodologia comentada anteriormente serão conduzidos experimentos para avaliação das implementações realizadas.}
+\item{\textbf{Experimentação e validação.} Por meio da metodologia comentada anteriormente serão conduzidos experimentos para avaliação das propostas.}
 
-\item {\textbf{Redação do relatório final.} Redigir o relatório final expondo os resultados obtidos no decorrer deste projeto.}
+\item {\textbf{Redação do relatório final.} Redação do relatório final expondo os resultados obtidos no decorrer deste projeto.}
 
-\item{\textbf{Elaboração de artigos científicos.} Nesta fase, serão redigidos artigos que reflitam o grau de desenvolvimento do projeto e as contribuições realizadas.}
+\item{\textbf{Elaboração de artigos científicos.} Serão redigidos artigos que reflitam o grau de desenvolvimento do projeto e as contribuições realizadas.}
 \end{compactenum}
 
 \subsection{Cronograma}\label{ssec:Cronograma}
-??????????????????????????????????
-editar esta seção
-???????????????????????
-O cronograma de desenvolvimento das atividades anteriormente enumeradas
-compreende dois anos. Ele é apresentado na tabela a seguir.
+O cronograma de desenvolvimento das atividades compreende dois anos.
+Ele é apresentado na tabela a seguir.
 
 \newcommand{\y}{\rule{13pt}{5pt}}
 \newcommand{\x}{\hspace*{4pt}}
