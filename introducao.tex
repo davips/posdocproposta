@@ -49,8 +49,8 @@ ou de acordo com características da base de dados.
 Na prática, essa escolha tem sido arbitrária, tendendo a se concentrar
 no uso da estratégia mais simples, chamada \textit{amostragem por incerteza}.
 Essa preferência foi reportada numa competição de aprendizado ativo,
-onde também prevaleceu a ausência de estratégias possivelmente mais efetivas
-como as baseadas em densidade conforme
+onde também prevaleceu a ausência de estratégias possivelmente mais efetivas,
+como as baseadas em densidade, conforme
 Figura \ref{compet}.
 \begin{figure}
 \caption{Frequência de uso de estratégias na competição de aprendizado ativo
@@ -116,26 +116,25 @@ Elas se baseiam, por exemplo, em medidas de densidade ou estatísticas de agrupa
 \citep{journals/tcs/Dasgupta11}.
 A dispensa do algoritmo, entretanto, leva a amostragens que não consideram a fronteira
 de decisão que seria traçada durante o aprendizado.
-Ela contém informações que permitem consultas mais prospectivas que exploratórias,
-potencialmente acelerando a descoberta dos exemplos mais relevantes.
+Essa fronteira contém informações que permitem consultas mais prospectivas que exploratórias,
+potenciais aceleradoras do processo de descoberta dos exemplos mais relevantes.
 
 Assim, existem pelo menos dois problemas e respectivos subproblemas em aberto na área
 de aprendizado ativo:
 \begin{itemize}
  \item Que situações dispensam o uso de aprendiz (algoritmo interno)?
- Dentre as estratégias agnósticas, qual a mais indicada para um dado problema?
+ Dentre as estratégias \textit{agnósticas}, qual a mais indicada para um dado problema?
  \item Como quebrar o círculo de dependências?
- Dentre as estratégias gnósticas, qual a mais indicada para um dado problema?
+ Dentre as estratégias \textit{gnósticas}, qual a mais indicada para um dado problema?
 \end{itemize}
 
-Neste projeto, propõe-se investigar os desdobramentos da aplicação de meta-aprendizado como apoio 
-na definição do melhor par estratégia-algoritmo.
+Neste projeto, propõe-se investigar os desdobramentos da aplicação de meta-aprendizado como apoio ao usuário
+na definição do melhor par estratégia-algoritmo para seu problema.
 Essa forma de recomendação automática quebra o círculo de dependências, pois o aprendiz é recomendado em
 conjunto com a estratégia, isentando o usuário de definir um algoritmo compatível com
 ambas, base de dados e estratégia.
 Está implícito nessa abordagem que o algoritmo de aprendizado do aprendiz é desvinculado
-do algoritmo de aprendizado do classificador definitivo da aplicação.
-O algoritmo do classificador definitivo é escolhido apenas após a rotulação.
+do algoritmo de aprendizado do classificador definitivo da aplicação que, por sua vez, é escolhido apenas após a rotulação.
 
 O meta-aprendizado tem sido investigado e demonstrado efetivo no grupo de pesquisa
 do candidato na melhoria da classificação de dados de expressão gênica
