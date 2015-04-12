@@ -1,0 +1,167 @@
+\section{Meta-aprendizado}\label{ma}
+Um sistema de classificação baseado em aprendizado de máquina depende
+de um modelo que é induzido por algoritmos de aprendizado.
+Diante da infinidade de vieses possíveis de aprendizado,
+muitos algoritmos têm sido propostos e alguns são frequentemente
+empregados de forma generalizada na solução dos mais diversos problemas,
+como é o caso das redes neurais artificiais \citep{haykin2004comprehensive}.
+Entretanto, nenhum algoritmo pode ser adequado a todos os domínios,
+pois um desempenho positivo em algumas situações de aprendizado
+precisa ser compensado por um igual grau de desempenho negativo
+em outras \citep{conf/icml/Schaffer94}.
+Isso decorre da existência de um viés necessário na forma de representação
+(árvores de decisão e neurônios artificiais entre outras)
+e busca de hipóteses sobre um dado problema (busca gulosa e otimização de funções entre outros).
+A existência do viés de aprendizado é essencial para a capacidade de generalização
+do algoritmo \citep{Mitchell:1980}.
+
+Dessa forma, um sistema de aprendizado de máquina requer
+uma escolha criteriosa de qual algoritmo deva ser empregado.
+% \cite{wolpert1996lack},
+Normalmente, o problema da escolha do algoritmo é resolvido
+por um especialista em aprendizado de máquina que se baseia em conhecimentos
+sobre os dados e sobre os algoritmos disponíveis
+para escolher manualmente o melhor.
+Essa escolha é feita segundo alguma métrica de desempenho
+\cite{books/daglib/0022052}.
+Uma maneira de se evitar a escolha manual é a adoção de algum tipo
+de \textit{meta-aprendizado}, que é o estudo do aperfeiçoamento dos
+algoritmos de aprendizado por meio da experiência.
+Esse aperfeiçoamento se dá no nível \textit{meta},
+que é um nível acima do aprendizado convencional, chamado de nível \textit{base}
+\citep{journals/air/VilaltaD02}.
+No nível base, o viés de aprendizado é fixo, enquanto que,
+no nível meta, o viés normalmente é escolhido dinamicamente.
+Existem diferentes formas de meta-aprendizado.
+As mais relevantes são apresentadas nas seções seguintes.
+A Seção \ref{direta}, em especial, descreve a abordagem mais aplicável ao problema de
+recomendação de estratégias de aprendizado ativo.
+Dependendo do conjunto de meta-atributos escolhidos,
+ela permite caracterizar as bases de dados com poucos rótulos ou na ausência deles.
+
+\subsection{Generalização em pilha}
+Na \ing{generalização em pilha}{stacked generalization}
+\citep{journals/nn/Wolpert92} o meta-aprendiz lida com uma metabase
+que consiste de um conjunto de treinamento transformado por
+aprendizes no nível base.
+O resultado dessa transformação são metaexemplos cujos valores dos atributos
+são as predições de cada modelo base.
+Uma particularidade dessa abordagem é o viés estático,
+pois ocorre uma combinação de algoritmos ao invés de uma seleção.
+
+\subsection{Caracterização por modelos}
+A própria estrutura dos modelos do nível base pode ser explorada na construção dos
+metaexemplos.
+Uma representante da \textit{caracterização por modelos} é a
+\ing{indução de modelos tipados de ordem maior}{typed higher-order induction}.
+Ela gera - de acordo com exemplo dado no trabalho de
+\cite{conf/ilp/BensusanGK00} - uma árvore de decisão para cada
+base de dados.
+As árvores são completamente representadas por estruturas complexas
+que servem de metaexemplos que são aprendidos por algoritmos especialmente
+desenvolvidos para esse tipo de tarefa.
+
+\subsection{Marcadores de referência}
+Os \ing{marcadores de referência}{landmarkers} \citep{pfahringer2000tell}
+são um conjunto diverso de algoritmos simples usados como referência para
+algoritmos mais complexos.
+A acurácia de cada um dos modelos associados fornece o valor de um meta-atributo.
+Embora não diretamente aplicável, o conceito da geração de meta-atributos por meio
+de processamentos que representem uma simplificação da tarefa base pode
+ser adaptável ao cenário de aprendizado ativo.
+
+\subsection{Caracterização direta}\label{direta}
+A caracterização direta consiste na obtenção de medidas diretamente dos exemplos
+que compõem uma base de dados, ou seja, sem o intermédio de um algoritmo
+de aprendizado.
+A primeira caracterização de bases de dados foi feita por \cite{conf/ijcai/RendellST87}
+com o intuito de predizer acurácia e tempo de processamento.
+Ela era baseada no número de exemplos e de atributos.
+O próximo conjunto de meta-atributos, proposto no projeto STATLOG
+\citep{brazdil1994analysis}, era composto de quinze medidas:
+% mitchie 1994 pode ser a referência certa do STATLOG?
+\begin{itemize}
+ \item número de exemplos, atributos binários e não binários e classes;
+ \item entropia das classes, informação mútua entre classe e atributos e razão sinal-ruído;
+ \item entropia, curtose, assimetria, correlação e razão entre os desvios padrão entre atributos;
+ \item primeira correlação canônica e variância pelo primeiro discriminante canônico.
+\end{itemize}
+Variações desse conjunto são propostas em trabalhos posteriores
+\citep{books/daglib/0022052},
+como a adoção de histogramas para evitar a perda de informações que ocorre quando
+se adota a média das medidas nos diferentes atributos base \citep{kalousis2002algorithm};
+ou a binarização de medidas, como o grau de dispersão do atributo alvo em
+tarefas de regressão \citep{journals/ijon/GomesPSRC12}.
+Outros conjuntos visam a recomendação automática de algoritmos não supervisionados.
+Essa tarefa é mais próxima da recomendação de estratégias de aprendizado ativo
+pela ausência de rótulos.
+Alguns trabalhos, por exemplo, adotam medidas como o grau de normalidade da distribuição e
+o percentual de pontos aberrantes e de atributos mais relevantes
+\citep{conf/ijcnn/SoutoPSACLS08,Ferrari2015181}.
+% e Luis Paulo) para otimizacao
+Também há trabalhos direcionados a: otimização \citep{journals/ijhis/KandaCHS11},
+fluxos de dados \citep{journals/ijon/RossiCSS14}, predição de ranqueamentos
+\citep{conf/iberamia/SouzaCS10} e detecção de ruído \citep{Garcia2015}.
+Não é do conhecimento do candidato a existência de publicações referentes à
+aplicação de meta-aprendizado a aprendizado ativo.
+Experimentos preliminares têm apresentado indícios da efetividade de tal abordagem
+e estão sendo submetidos em veículo apropriado na época de escrita deste projeto.
+Ela têm sido investigada de forma pioneira pelo candidato na fase final de seu doutorado
+e sua exploração em maior profundidade está em sua tese como um possível desdobramento futuro
+que espera-se contemplar com a proposta da Seção \ref{pr}.
+
+
+% Meta-aprendizado estuda como os algoritmos de AM podem aumentar sua eficiência através da experiência \cite{606413}. O objetivo é entender como o próprio processo de aprendizado pode se tornar flexível de acordo com o domínio ou tarefa em estudo. Todos os algoritmos de AM funcionam adaptando seus parâmetros a um ambiente específico. A meta-aprendizado difere da aprendizado convencional, de base, no escopo de seu nível de adaptação. Enquanto que a aprendizado no nível de base trabalha em uma base de dados por vez, a aprendizado no meta-nível é baseada no acúmulo de experiência do desempenho de múltiplas aplicações de um algoritmo de AM. De maneira geral, pode-se dizer que a meta-aprendizado tem interesse em focar na relação entre domínios ou tarefas e estratégias de aprendizado.
+% 
+% Dentre as aplicações mais comuns de meta-aprendizado, tem-se o problema de gerar regras capazes de relacionar o desempenho de algoritmos de AM com as propriedades das bases de dados. Em termos práticos, isso poderia ajudar na criação de sistemas de fornecessem ao usuário sugestões sobre que algoritmos utilizar em determinadas situações. Tais sistemas, segundo Kalousis \cite{Kalousis2002}, podem ser estudados segundo os seguintes critérios: caracterização de bases de dados, medidas de avaliação, formas de sugestão e métodos de construção de sugestão. A seguir, uma breve explanação de cada um desses tópicos é fornecida.
+% 
+% \subsection{Caracterização de bases de dados}
+% Caracterizar bases de dados consiste em identificar e extrair
+% propriedades que, possivelmente, afetem o desempenho dos algoritmos
+% de classificação. O objetivo da caracterização é fornecer informações morfológicas dos dados
+% para a aplicação de técnicas de meta-aprendizado. Isto é possível devido ao conhecimento a priori do comportamento dos algoritmos, sob um determinado aspecto. Por exemplo, alguns algoritmos não trabalham satisfatoriamente na presença de atributos irrelevantes \cite{Aha1989}, como o \textit{K-NN} \cite{954544}, enquanto outros, como Redes Neurais \cite{Haykin94} e Máquinas de Vetores de Suporte \cite{211359}, possuem mecanismos internos de seleção/ponderação de atributos, fazendo com que sejam mais robustos \cite{Haykin94}. Outro exemplo é o algoritmo \textit{Naive Bayes} \cite{954544}, que pressupõe a independência dos atributos e, por isso, não lida bem com atributos redundantes \cite{langley1994}. Com observações como essas, compreende-se a importância de considerar medidas que explorem as particularidades dos dados a fim de entender o desempenho dos algoritmos de classificação.
+% 
+% De acordo com Soares \textit{et al} \cite{969941}, as medidas que caracterizam as bases de dados devem conter informação relevante para determinar o desempenho relativo entre os algoritmos de classificação e apresentar baixo custo computacional. Atualmente, a pesquisa em caracterização concentra-se em 3 áreas \cite{Vilalta2005}: caracterização direta, baseada em estatística e na teoria da informação; caracterização baseada em  \textit{\textit{landmarking}} e; caracterização via modelos. A seguir, uma breve explanação acerca destas abordagens é fornecida.
+% 
+% \subsubsection{Caracterização direta}
+% Um dos primeiros esforços sistemáticos e em larga escala para tentar relacionar as medidas que caracterizam as bases de dados e o desempenho dos algoritmos foi empreendido no projeto STATLOG \cite{212782}. Entre outros objetivos, o projeto pesquisou porque certos algoritmos classificavam bem em alguns domínios e apenas regular em outros. Seus experimentos foram realizados utilizando 23 algoritmos e 21 bases de dados. As medidas, ou meta-atributos, utilizadas para caracterizar as bases de dados foram divididas em 3 categorias: simples, estatísticas e baseadas na teoria da informação. Os meta-atributos simples incluem medidas gerais das bases de dados, como o número de atributos e o número de exemplos, entre outras. Os estatísticos aplicam conceitos de Estatística, como os coeficientes médios de assimetria e curtose, aos atributos numéricos. As medidas baseadas na teoria da informação são utilizadas para caracterizar os atributos nominais e sua relação com classe.
+% 
+% Mais recentemente, o projeto METAL (\url{www.metal-kdd.org}) visou o desenvolvimento de ferramentas que auxiliem o usuário a selecionar uma combinação adequada de técnicas de pré-processamento, classificação e regressão. O projeto fomentou o desenvolvimento de várias abordagens relacionadas à pesquisa em meta-aprendizado, especialmente em relação a formas apropriadas de meta-aprendizado, a meta-atributos para caracterizar as bases de dados e o desempenho dos algoritmos e a estudos empíricos e teóricos em meta-aprendizado. Uma das abordagens para a caracterização das bases de dados consistiu em estender as medidas utilizadas no STATLOG.
+% 
+% Outras contribuições importantes para a caracterização podem ser encontradas em \cite{Soares2004}\cite{Kalousis2002} e referências ali contidas.
+% 
+% \subsubsection{\textit{Landmarking}}
+% Pfahringer \textit{et al} \cite{2000-pfahringer} introduziram uma técnica de caracterização de bases de dados baseada no desempenho de algoritmos de classificação. Segundo os autores, cada algoritmo opera satisfatoriamente em uma determinada área de competência, ou seja, tipo de dados. Assim, através da aplicação de algoritmos simples, chamados \textit{landmarkers}, seria possível obter informação importante sobre a natureza do domínio em que eles são aplicados. Portanto, uma base de dados poderia ser descrita pela coleção de áreas de competência as quais ela pertence. \textit{Landmarking} consiste da aplicação de \textit{landmarkers} a bases de dados afim de localizá-las em um espaço onde áreas de competências estão inseridas, o espaço de competências.
+% 
+% O \textit{landmarking} é utilizado para determinar a proximidade de uma base de dados em relação a outras, através da similaridade de desempenho dos \textit{landmarkers}. Com isso, forma-se uma vizinhança de áreas de competência, onde bases de dados podem ser representadas. Espera-se que bases de dados de natureza semelhante pertençam às mesmas áreas de competência e, por conseguinte, sejam adequadas à aplicação dos mesmos algoritmos de classificação. Aos algoritmos de meta-aprendizado cabe explorar quão bem as informações dos \textit{landmarkers} podem ser utilizadas para localizar as bases de dados no espaço de competências.
+% 
+% Uma exemplo de utilização de \textit{landmarking} como técnica de caracterização de dados em meta-aprendizado é fornecido por Besuan e Giraud-Carrier \cite{2000-bensusan-1}. No estudo, os autores selecionaram 7 algoritmos simples com diferentes mecanismos de funcionamento para atuar como \textit{landmarkers} e 10 algoritmos complexos para servir de sugestão à classificação final dos dados. Os \textit{landmarkers} foram utilizados como meta-atributos por um esquema de meta-aprendizado para aprender e sugerir o algoritmo complexo mais apropriado para aplicação em uma base de dados. Os experimentos do trabalho compararam o \textit{landmarking} e diferentes medidas envolvendo a caracterização direta, apresentada na Subseção anterior, e demonstraram o potencial da nova abordagem.
+% 
+% \subsubsection{Caracterização via modelos}
+% Uma forma alternativa de representar bases de dados utilizando algoritmos de classificação é fornecida pela caracterização via modelos \cite{2000-bensusan-2}\cite{736120}\cite{1998-bensusan}. Entretanto, diferente do \textit{landmarking}, a abordagem não considera diretamente medidas de desempenho do classificador induzido e sim a estrutura do próprio classificador, conhecida como a hipótese induzida ou modelo. Segundo Vilalta \textit{et al} \cite{Vilalta2005}, há diversas vantagens neste tipo de caracterização, dentre as quais destacam-se: a base de dados é resumida em uma estrutura que contém informações sobre a complexidade e desempenho do modelo e; a representação dos dados nessa forma pode servir de base para explicar o desempenho do algoritmo de aprendizado.
+% 
+% A utilização de modelos para a caracterização de bases de dados realiza uma mudança no espaço de busca do algoritmo de meta-aprendizado, passando do espaço de exemplos para o espaço de hipóteses do algoritmo de caracterização\cite{2000-bensusan-2}. Como este, idealmente, é capaz de realizar uma busca eficiente em seu rico espaço de hipóteses, espera-se que a utilização da hipótese induzida comprima a base de dados original de forma a oferecer meta-atributos mais interessantes ao algoritmo de meta-aprendizado.
+% 
+% Dentre os algoritmos de classificação, as árvores de decisão são as mais utilizadas para realizar a caracterização de bases de dados. Segundo Bensusan \textit{et al} \cite{2000-bensusan-2}, há evidências empíricas que demonstram importantes conexões entre as propriedades das bases de dados e as estruturas de árvores de decisão não podadas. Além disso, elas têm sido muito estudadas e apresentam comportamento determinístico \cite{736120}, facilitando sua aplicação e entendimento. Como meta-atributos, diversas medidas de uma árvore de decisão podem ser utilizadas, como, por exemplo \cite{Vilalta2005}: o número de nós por atributo, a profundidade máxima da árvore, a sua forma, o grau de balanceamento, etc. Extensões das medidas de árvores são fornecidas por Peng \textit{et al} \cite{736120}.
+% 
+% \subsection{Medidas de avaliação}
+% Para determinar qual algoritmo de AM utilizar em um determinado conjunto de dados, é necessário especificar as medidas de desempenho consideradas, para que uma lista de preferência dos algoritmos possa ser estabelecida. Diversas medidas podem ser utilizadas. Recentemente, Caruana e Niculescu-Mizil \cite{1143865}, realizaram um estudo comparando vários algoritmos de AM supervisionada levando em conta diferentes medidas de desempenho, dentre as quais tem-se a acurácia, a área sob as curvas ROC \cite{ProvostF97}, $F-Score$, error médio quadrático, etc. Os autores enfatizam a necessidade de realizar comparações envolvendo múltiplas medidas, permitindo assim a exploração de várias facetas do classificador. Além de medidas relacionadas com as predições feitas pelos classificadores, em alguns domínios outras medidas podem ser interessantes, como, por exemplo, o tempo requerido para o algoritmo de AM construir um classificador, o tempo requerido para o classificador rotular um exemplo, a quantidade de memória 
+% requerida pelo algoritmo e a simplicidade e interpretabilidade dos classificadores construídos, entre outras.
+% 
+% Embora a utilização de apenas uma medida de avaliação seja a prática mais comum em meta-aprendizado, é possível utilizar abordagens multi-objetivas, em que duas ou mais medidas são combinadas. Por exemplo, o usuário pode estar interessado no compromisso entre tempo de treinamento e acurácia, preferindo algoritmos mais rápidos mesmo que ligeiramente menos acurados. Neste caso, é preciso mapear os valores do das medidas em um único valor, a fim de definir a lista de preferência entre os algoritmos. Soares e Brazdil \cite{669812}, por exemplo, utilizaram como critério uma medida chamada \textit{Adjusted Ratio of Ratios}, que combina acurácia e tempo de execução. Uma abordagem mais flexível foi proposta por Nakhaeizadeh Schnabl \cite{NakhaeizadehS97}. Ela permite a incorporação de qualquer quantidade de medidas de avaliação.
+% 
+% 
+% \subsection{Formas de Sugestão}
+% De acordo com Kalousis \cite{Kalousis2002}, de maneira geral, há 3 abordagens de sugerir algoritmos para a apreciação do usuário. A primeira consiste em fornecer o melhor algoritmo, ou seja, aquele que produza, idealmente, o melhor modelo para uma dada tarefa ou base de dados, segundo algum critério. Exemplos de sua utilização podem ser encontrados em \cite{Koepf2000} e \cite{2000-bensusan-5} Uma crítica a esta abordagem refere-se à eventual não disponibilidade do algoritmo em um dado momento, impossibilitando sua aplicação. A segunda abordagem é mais flexível, indicando, dentre os algoritmos considerados, o conjunto de algoritmos que apresentam bom desempenho esperado na base de dados. Neste conjunto, além do melhor algoritmo, estão presentes os algoritmos que não possuam desempenho estatisticamente inferior ao melhor \cite{736120}. No projeto STATLOG, as sugestões eram apresentadas dessa forma. A terceira abordagem exibe os algoritmos em ordem de preferência com relação à base de dados. O critério de 
+% ordenação pode ser simplesmente a acurácia dos classificadores, como em \cite{650030}, ou medidas mais complexas, que envolvem múltiplos objetivos, tais como tempo de execução do algoritmo ou a interpretabilidade do modelo gerado, conforme visto na Subseção anterior.
+% 
+% \subsection{Construindo sugestão a partir da caracterização}
+% Uma das principais tarefas da meta-aprendizado é relacionar as características das bases dados ao desempenho dos algoritmos de AM, de forma a poder sugerir que algoritmos utilizar em determinados domínios. De maneira geral, essa tarefa pode ser vista como um problema de AM, situado em um nível superior de abstração. Nele, as características das bases de dados são utilizadas para gerar meta-exemplos. Os meta-exemplos são caracterizados por meta-atributos e possuem como classe associada alguma informação acerca do desempenho dos algoritmos de AM disponíveis. O conjunto de meta-exemplos constitui a meta-base de dados sobre a qual será aplicado um algoritmo de AM. O classificador gerado a partir da meta-base de dados é chamado de meta-classificador e ele realiza o mapeamente entre os os meta-dados e os algoritmos de AM. Para ilustrar esse processo, 3 formas da utilização de meta-aprendizado são discutido a seguir.
+% 
+% No projeto STATLOG, o objetivo era determinar quais algoritmos de AM supervisionada, de um total de $n$, são aplicáveis a determinadas bases de dados. Para isso, $n$ meta-problemas são construídos. Cada um deles é formado por meta-exemplos associados a uma das duas classes: aplicável e não-aplicável, dependendo se um dado algoritmo de AM apresentam desempenho alto ou baixo, em termos de acurácia, naquela base de dados. Os meta-classificadores aplicados aos meta-problemas são sistemas de regra de decisão. Para determinar quais algoritmos de AM são aplicáveis a uma nova base de dados, os $n$ meta-classificadores são executados e a resposta é obtida.
+% 
+% Outra formulação do problema considera $(^n _2)$ meta-problemas, onde cada um corresponde a uma comparação pareada dos algoritmos de AM disponíveis. Os meta-exemplos dos meta-problemas são as descrições das bases de dados, mas agora a classe associada indica qual dos dois algoritmos é mais apropriado àquela base de dados específica. O objetivo aqui é construir meta-classificadores que descrevem sob que circunstâncias qual algoritmo de AM é preferível em relação a outro. Essa abordagem foi utilizada por Pfahringer et al \cite{2000-pfahringer}.
+% 
+% A forma de meta-aprendizado mais simples consiste em considerar um único meta-problema. Nele, a classe de cada meta-exemplos é o algoritmo de AM que apresenta maior acurácia naquela base de dados. Esta abordagem foi utilizada por Bensusan e Giraud-Carrier \cite{2000-bensusan-1}. Nesse trabalho, eles consideraram diversos algoritmos de AM para construir meta-classificadores e verificaram o desempenho de cada um.
+% 
+% Técnicas mais sofisticadas e interessantes produzem listas de algoritmos em ordem de preferência. Soares e Brazdil \cite{669812} desenvolveram o \textit{zoomed ranking}, que opera em 2 fases. Na primeira, é selecionado um sub-conjunto de bases de dados similares à nova base de dados. Esta seleção é feita com o uso do algoritmo \textit{K-NN}, cuja função de distância utiliza os meta-atributos das bases de dados para selecionar as $k$ bases de dados mais similares. Na segunda fase, a lista ordenada é gerada, considerando o \textit{Adjusted Ratio of Ratios}, comentado anteriormente.

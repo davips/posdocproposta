@@ -1,0 +1,163 @@
+\section{Proposta}\label{pr}
+A literatura atual de aprendizado ativo segue pelo menos duas tendências de criação:
+novos cenários, como a rotulação massiva por meio de supervisores de baixo custo \citep{journals/ijcv/VijayanarasimhanG14};
+e, novas estratégias como a síntese de exemplos de fronteira \citep{journals/ijon/WangHYL15}
+dentre outras.
+Apesar das novas propostas de estratégias contribuírem para o avanço da área,
+elas tornam a tarefa de escolha de estratégia ainda mais complexa,
+pois aumenta a quantidade de opções, sem necessariamente aumentar a eficiência
+da amostragem.
+Adicionalmente, cada estratégia requer uma implementação compatível com o sistema do usuário,
+inviabilizando, assim, a experimentação de grande parte das abordagens existentes.
+
+A tese do candidato do presente projeto é sobre a comparação de estratégias já
+consolidadas na literatura e seus nichos de aplicação conforme publicado recentemente
+em \cite{santos2014viabilidade} e \cite{conf/hais/SantosC14}.
+As possibilidades iniciais de recomendação automática são apresentadas na tese,
+ainda em conclusão, antes do fechamento do presente texto.
+A proposta deste projeto é manter esse conjunto de estratégias já implementadas
+\citep{doi/al}, que é representativo da diversidade de paradigmas existentes, 
+como as alternativas possíveis do usuário.
+Mais precisamente, será considerado cada par estratégia-algoritmo como
+uma alternativa.
+O objetivo primário é explorar as possibilidades de recomendação automática
+desses pares por meio da aplicação de meta-aprendizado.
+Adicionalmente, espera-se investigar as seguintes questões:
+\begin{compactenum}
+\item{Quais são as implicações do uso de meta-aprendizado?
+Ele pode representar uma \textit{quebra de paradigma}
+
+\textit{isso resolve todos os problemas colocados na introdução: se deve ser agnostica ou gnostica, qual estratégia
+específica
+e qual variante da estratégia (métrica de distância, etc.)}
+
+posso falar da abordagem por
+ranking e por vencedor
+}
+\end{compactenum}
+
+\subsection{Infraestrutura}
+O trabalho será desenvolvido no Laboratório de Computação Bioinspirada (BIOCOM),
+do ICMC/USP.
+Ele dispõe de computadores pessoais e servidores para a implementação
+e execução de experimentos.
+Conta-se ainda com as bibliotecas
+das unidades de Computação, Física e Engenharia do Campus de São Carlos.
+
+\subsection{Metodologia}
+As técnicas desenvolvidas no projeto serão investigadas
+experimentalmente e avaliadas quanto à viabilidade na recomendação
+de estratégias.
+Serão empregadas métodos quantitativos com nível de confiança estatística
+na avaliação \citep{Bishop2006}.
+
+\subsection{Orçamento}
+??????????????????????????????????
+editar esta seção
+???????????????????????
+Nesta proposta, solicitam-se recursos para a aquisição de material permanente,
+passagens, diárias e material bibliográfico.
+O material permanente se refere aos equipamentos necessários para incrementar a
+base de computadores instalados no BIOCOM. As passagens e diárias são para a
+participação em conferências e congressos relevantes à linha de pesquisa deste projeto.
+O material bibliográfico é para a atualização do acervo bibliográfico da biblioteca do
+ICMC.
+
+\begin{table}[!htp]
+\centering
+\begin{tabular}{|lr|}
+\hline
+\textbf{Tipo do recurso} & \textbf{Custo total (R\$)} \\
+\hline
+\multicolumn{2}{|c|}{Ano 1} \\
+\hline
+Material permanente & 3.500,00 \\
+Passagens           & 6.000,00 \\
+Diárias             & 1.500,00 \\
+Material bibliográfico & 1.000,00 \\
+\textbf{Total} & 12.000,00 \\
+\hline
+\multicolumn{2}{|c|}{Ano 2} \\
+\hline
+Material permanente & 3.500,00 \\
+Passagens           & 6.000,00 \\
+Diárias             & 1.500,00 \\
+Material bibliográfico & 1.000,00 \\
+\textbf{Total} & 12.000,00 \\
+\hline
+\end{tabular}
+\caption{Custos do projeto.}
+\end{table}
+
+\subsection{Plano de atividades}
+??????????????????????????????????
+editar esta seção
+???????????????????????
+As atividades previstas para a execução deste projeto de doutorado são as seguintes:
+
+\begin{compactenum}
+
+\item{\textbf{Pesquisa bibliográfica.} Pesquisa bibliográfica com o objetivo de atualizar os conhecimentos sobre o
+tema investigado e estudar alternativas para cumprir os objetivos apontados.}
+
+\item{\textbf{Implementação das técnicas estudadas.} A partir da pesquisa bibliográfica mais acurada, abordagens adequadas serão desenvolvidas para integrar meta-aprendizado à seleção de atributos, composição de \textit{ensembles} e otimização de parâmetros de algoritmos de AM.}
+
+\item{\textbf{Experimentação e validação.} Por meio da metodologia comentada anteriormente serão conduzidos experimentos para avaliação das implementações realizadas.}
+
+\item {\textbf{Redação do relatório final.} Redigir o relatório final expondo os resultados obtidos no decorrer deste projeto.}
+
+\item{\textbf{Elaboração de artigos científicos.} Nesta fase, serão redigidos artigos que reflitam o grau de desenvolvimento do projeto e as contribuições realizadas.}
+\end{compactenum}
+
+\subsection{Cronograma}\label{ssec:Cronograma}
+??????????????????????????????????
+editar esta seção
+???????????????????????
+O cronograma de desenvolvimento das atividades anteriormente enumeradas
+compreende dois anos. Ele é apresentado na tabela a seguir.
+
+\newcommand{\y}{\rule{13pt}{5pt}}
+\newcommand{\x}{\hspace*{4pt}}
+\setlength{\tabcolsep}{0pt}
+
+\begin{table}[h] %\footnotesize
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+
+  \cline{2-13}
+  \multicolumn{1}{l|}{} &
+  \multicolumn{6}{c|}{\rotatebox{90}{Ano 1\hspace{3pt}}} &
+  \multicolumn{6}{c|}{\rotatebox{90}{Ano 2\hspace{3pt}}} \\
+
+  \cline{2-13}
+%    \multicolumn{1}{c|}{\textbf{Meses}} \\
+
+  \multicolumn{1}{c|}{\textbf{Atividades}} &
+                        \rotatebox{90}{01 - 02\hspace{6pt}} &
+                        \rotatebox{90}{03 - 04\hspace{6pt}} &
+                        \rotatebox{90}{05 - 06\hspace{6pt}} &
+                        \rotatebox{90}{07 - 08\hspace{6pt}} &
+                        \rotatebox{90}{09 - 10\hspace{6pt}} &
+                        \rotatebox{90}{11 - 12\hspace{6pt}} &
+                        \rotatebox{90}{01 - 02\hspace{6pt}} &
+                        \rotatebox{90}{03 - 04\hspace{6pt}} &
+                        \rotatebox{90}{05 - 06\hspace{6pt}} &
+                        \rotatebox{90}{07 - 08\hspace{6pt}} &
+                        \rotatebox{90}{09 - 10\hspace{6pt}} &
+                        \rotatebox{90}{11 - 12\hspace{6pt}} \\
+  \hline
+  1)Pesquisa bibliográfica & \y & \y & \y & \y & \y & \y & \y & \y & \y & \y & \y & \y  \\
+  \hline
+  2)Implementação & \x & \x & \x & \x & \y & \y & \y & \y & \y & \x & \x & \x  \\
+  \hline
+  3)Experimentação e validação & \x & \x & \x & \x & \x & \y & \y & \y & \y & \y & \x & \x  \\
+  \hline
+  4)Redação do relatório & \x & \x & \x & \x & \x & \x & \x & \x & \x & \x & \x & \y  \\
+  \hline
+  5)Elaboração de artigos & \x & \x & \x & \x & \x & \x & \y & \y & \y & \y & \y & \y  \\
+  \hline
+\end{tabular}
+ \caption{Cronograma de atividades}
+ \label{tab:Cronograma}
+ \normalsize
+\end{table}

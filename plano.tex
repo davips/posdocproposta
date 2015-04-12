@@ -1,0 +1,202 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{etex}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\documentclass[12pt, a4paper]{book}
+%******************************* Importado Pacotes *********************************************
+%\usepackage[portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[pdftex]{graphicx}
+% \usepackage[ansinew]{inputenc} % permite acentuação correta
+\usepackage{times}    % Fonte Times
+\usepackage{setspace}
+\usepackage{xspace}
+\usepackage{float}
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+\usepackage{verbatim}
+\usepackage{multitoc}
+\usepackage{textfit}
+\usepackage[compact]{titlesec}
+\usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage[verbose,left=25mm,right=25mm,top=35mm,bottom=30mm]{geometry} % margens
+\usepackage{ae}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{lettrine}
+\usepackage{graphics}
+\usepackage{makecell}
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage[%numbers,
+            authoryear,
+            sort&compress,]{natbib}
+
+\usepackage{paralist}
+
+\newcommand{\aocfg}{$\mathcal{AOCFG}\xspace$ }
+\newcommand{\aodu}{$\mathcal{AODU}\xspace$ }
+\newcommand{\madu}{$\mathcal{MADU}\xspace$ }
+\newcommand{\ig}{$\mathcal{IG}\xspace$ }
+\newcommand{\var}[1]{{\textit{#1}}}
+\newcommand{\bci}[1]{{\scriptsize\textbf{#1}}}
+\newcommand{\jbt}{JaBUTi}
+\newcommand{\anei}{Todos-Nós$_{ei}$}
+\newcommand{\aned}{Todos-Nós$_{ed}$}
+\newcommand{\aneid}{todos-nós-independentes-de-exceção }
+\newcommand{\anedd}{todos-nós-dependentes-de-exceção }
+
+
+\hyphenation{res-pei-to me-lho-rar}
+
+%***************************** Economia de espaço ***************************
+
+\renewenvironment{itemize}
+{\begin{list}
+             {\tiny\textbullet}%
+             {\setlength{\topsep}{-2pt}%
+              \setlength{\itemsep}{-2pt}%
+             }%
+} {\end{list}}
+
+\renewenvironment{enumerate}
+{\begin{list}
+             {\labelenumi}%
+             {\usecounter{enumi}%
+              \setlength{\topsep}{-2pt}%
+              \setlength{\itemsep}{-2pt}%
+             }%
+} {\end{list}}
+
+
+
+%*****************************  Definições de estilo   ************************
+
+\pagestyle{fancy}   % define estilo de página
+\fancyfoot[C]{\thepage}  % insere numero da pagina no rodapé
+\fancyhead[R]{\leftmark}
+\lhead{}            % define o cabeçalho do lado direito como sendo vazio
+\chead{}                      % define o cabeçalho do centro como sendo vazio
+\let\cite=\citep    % define o formato/tipo de citações.
+
+\bibliographystyle{icmc2}
+
+\widowpenalty=10000 \clubpenalty=10000 \exhyphenpenalty=10000
+
+% comando para trocar a fonte da palavra Lattes - utilizar \Lattes
+\usepackage{xspace}
+\newcommand{\Lattes}{\textsc{\mbox{Lattes}}\xspace}
+
+% Ajusta o numero de capítulos para 3 níveis
+\setcounter{secnumdepth} {3}
+
+% Faz com que os 3 níveis de capítulos apareçam no índice
+\setcounter{tocdepth} {3}
+
+%***********
+% definição de comando para inserir referências do tipo apud
+
+%\nobibliography*
+
+%\newcommand{\apud}[2]{\@apud#1,#2\@endapud}
+
+%\def\@apud#1,#2\@endapud{%
+
+%    \citetext{\citet{#1}\footnote{\bibentry{#1}} \textbf{apud} \citet{#2}}%
+
+%}
+
+%\date{\today}
+\usepackage{pgfplots,bm}
+%\usetikzlibrary{plotmarks}
+\usetikzlibrary{scopes,shapes,shadows,calc,arrows,shapes.symbols,automata,decorations.pathmorphing,backgrounds,fit,positioning}
+
+\newcommand{\ing}[2]{\emph{#1}\footnote{\textit{#2}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+
+
+\input{capa}
+
+%\maketitle
+%\thispagestyle{empty}
+
+
+%\newpage
+
+\setcounter{page}{1}
+
+%\begin{abstract}
+%\input{resumo}
+%\end{abstract}
+
+
+%**************************************  Índice ***********************************************
+
+%\newpage
+%\tableofcontents
+\onehalfspace
+
+%**********************************************************************************************
+
+\newpage
+
+%\section{Contexto e Motivação}
+\label{sec:introducao}
+%\input{contexto}
+\input{introducao}
+\input{aprendizadomaquina}
+\input{metaaprendizado}
+\input{proposta}
+
+
+%**********************************************************************************************
+
+%\newpage
+
+%\section{Revisão Bibliográfica}
+\label{sec:revisao}
+%\input{revisao}
+
+%**********************************************************************************************
+
+%\newpage
+
+%\section{Teste Estrutural de Programas Orientados a Aspectos}
+\label{sec:mestrado}
+%\input{mestrado}
+
+
+%**********************************************************************************************
+
+%\section{Proposta}\label{sec:proposta}
+%\input{proposta}
+
+
+%*****************************  Bibliografia  *************************************************
+
+\begin{spacing}{0.4}
+{ 
+\footnotesize
+\bibliography{bibliografia}
+}
+\end{spacing}
+
+%%***************************************
+%
+%\vspace*{1cm plus 3fill minus 1cm}
+%
+%\footnotesize{ \singlespacing
+%\begin{center}
+% \begin{tabular}{ccc}
+% -------------------------------------------------- & & -------------------------------------------------- \\
+% \parbox{75mm}{\centering Bruno Feres de Souza} &  & \parbox{75mm}{\centering André Carlos Ponce de Leon Ferreira de Carvalho} \\
+% Candidato & & Orientador \\
+% \end{tabular}
+% \end{center}
+%
+%
+\end{document}

@@ -1,0 +1,259 @@
+\section{Aprendizado ativo}\label{aa}
+Aprendizado ativo é o estudo de máquinas
+de aprendizado capazes de se aprimorar fazendo perguntas
+\citep{series/synthesis/2012Settles}.
+A ideia básica é, numa analogia com o aprendizado humano,
+aproveitar a individualidade de cada aluno e seu próprio ritmo de aprendizado.
+Assim, ele pode ser auxiliado pelo professor nos aspectos em que experimenta
+maior dificuldade.
+Da mesma forma, um algoritmo pode usufruir de uma atenção seletiva que
+priorize os exemplos mais difíceis para ele em um dado momento.
+
+Dentre as perguntas que as máquinas de aprendizado ativo são capazes de
+elaborar, a mais direta é ``\textit{Qual é a classe do exemplo $\bm{x}$?}''.
+Dado que a obtenção de um rótulo confiável normalmente é um processo custoso,
+o problema de se decidir qual seria o melhor $\bm{x}$ é o cerne de uma estratégia de
+aprendizado ativo.
+Por exemplo, quando a consulta de um exemplo envolve reações químicas
+destrutivas, é desejável fazer o mínimo possível de consultas visando um reduzido
+custo material.
+Dessa forma, apenas uma parcela criteriosamente escolhida dos exemplos deve
+ser rotulada, ou \textit{consultada}, na terminologia de aprendizado ativo.
+Assim, um direcionamento adequado do esforço de aprendizado tem como resultado um
+processo de rotulação mais econômico.
+
+As estratégias podem ser baseadas em diferentes concepções de relevância de
+exemplos ou mesmo diferentes teorias do aprendizado.
+A amostragem por incerteza,
+por exemplo, assume que os exemplos e seus rótulos pertencem a uma
+distribuição de probabilidades;
+a amostragem por busca no espaço de hipóteses, por sua vez, assume a existência
+de hipóteses integrantes de
+um espaço de versões \citep{books/daglib/0087929}
+que enquadram ou não cada exemplo.
+Estratégias agnósticas \citep{journals/jcss/BalcanBL09}, por outro lado,
+são independentes de algoritmo de aprendizado.
+Essa diversidade de embasamentos configura-se praticamente como um conjunto de
+paradigmas de amostragem ativa.
+
+Os paradigmas normalmente se situam em um ou mais dos três principais
+cenários da literatura de aprendizado ativo
+\citep{settles2010active}:
+\textit{síntese de consulta por associação} ou
+\ing{consulta de exemplos sintetizados}{membership query synthesis};
+\ing{amostragem baseada em reserva de exemplos}{pool-based sampling}; e,
+\ing{amostragem seletiva baseada em fluxo}{stream-based selective sampling}.
+O cenário adotado neste trabalho é o baseado em reserva de exemplos.
+Esse cenário permite que a estratégia tenha acesso a todos os exemplos
+e escolha qual consultar.
+% Especificamente, há as seguintes restrições de escopo:
+% \begin{itemize}
+%  \item consulta pela classe (não por valores de atributos, por exemplo);
+%  \item monorrótulo;
+%  \item distribuição estacionária;
+%  \item custo por erro de classificação uniforme;
+%  \item custo por consulta uniforme;
+%  \item oráculo único e constante sujeito a ruído;
+%  \item os domínios dos atributos nominais são previamente conhecidos;
+%  \item atributos sem valores faltantes;
+%  \item consulta \ing{um a um}{on-line}.
+% \end{itemize}
+Nesse contexto, a variedade de abordagens fundamentais existentes é resumida na
+Tabela \ref{stratsparcial} cuja primeira coluna referencia cada estratégia pela abreviação
+de seu nome original em inglês, que é dado juntamente com os títulos das seções seguintes.
+\begin{table}
+\caption{Características de cada estratégia.
+\textit{A ordem de complexidade é dada conforme a quantidade de exemplos
+a aprender para viabilizar cada consulta. }
+}
+\scalebox{0.88}{
+\begin{tabular}{c|c|c|c|c|c}
+\textbf{estratégia} & \textbf{\makecell{forma\\ de busca}}&\textbf{\makecell{presença \\de aprendiz}} & \textbf{\makecell{definição da \\sequência de \\consultas}} & \textbf{\makecell{dependência\\entre\\consultas}}&\textbf{\makecell{ordem de\\complexidade}}\\ \hline
+Rnd & \makecell{exploratória\\aleatória} & \makecell{agnóstica}&autônoma&nenhuma&$\mathcal{O}(0)$\\ \hline
+Clu&\makecell{balanceada:\\exploratória e\\prospectiva}& agnóstica&interativa&total&\makecell{não\\especificada}\\ \hline
+\makecell{Unc/Mar/Ent\\QBC/DW}&prospectiva&gnóstica&interativa&total&$\mathcal{O}(1)$\\ \hline
+% SVMsim&prospectiva&\makecell{gnóstica\\(aprendiz\\específico)}&interativa&total&$\mathcal{O}(|\mathcal{U}||\mathcal{L}|)$\\ \hline
+% SVMbal&\makecell{alternada:\\exploratória e\\prospectiva}&\makecell{gnóstica\\(aprendiz\\específico)}&interativa&total&$\mathcal{O}(|\mathcal{U}||\mathcal{L}|)$\\ \hline
+SG&\makecell{exploratória\\limitada e\\aleatória}&gnóstica&interativa&total&$\mathcal{O}(|Y|)$\\ \hline
+EGL&prospectiva&\makecell{gnóstica\\(aprendiz\\específico)}&interativa&total&$\mathcal{O}(|Y||\mathcal{U}|)$\\ \hline
+EER&prospectiva&gnóstica&interativa&total&$\mathcal{O}(|Y||\mathcal{U}|^2)$\\ \hline
+TU&\makecell{balanceada:\\exploratória e\\prospectiva}&gnóstica&interativa&\makecell{após etapa\\exploratória}&$\mathcal{O}(1)$\\ \hline
+\end{tabular}
+}
+\label{stratsparcial}
+\end{table}
+
+
+\subsection{Amostragem aleatória - Rnd}
+Na amostragem aleatória não há uma ordem de preferência para a realização de
+consultas.
+Ela é puramente exploratória, ou seja,
+não enfoca nenhuma região em especial do espaço de exemplos; e,
+é agnóstica, pois não requer um aprendiz.
+
+\subsection{Amostragem por incerteza - Unc}\label{unc}
+A amostragem por incerteza decide quando selecionar um exemplo $\bm{x}$
+pela máxima probabilidade a posteriori de se obter a classse $\bm{y}$
+dada por um modelo probabilístico \citep{journals/sigir/Lewis95a};
+onde $Y$ é o conjunto de classes possíveis:
+\begin{equation}
+P_{max}(\bm{x})=\max_{\bm{y}\in Y}P(\bm{y}|\bm{x})
+\end{equation}
+A estratégia de amostragem por incerteza consiste em consultar o exemplo
+mais informativo $\bm{x}^*$,
+ou seja, aquele com a menor $P_{max}(\bm{x})$,
+com o intuito de se explorar a fronteira de decisão no espaço de exemplos, conforme
+Equação \ref{equnc}.
+\begin{equation} \label{equnc}
+ \bm{x}^*= \argmin_{\bm{x}\in\mathcal{U}}P_{max}(\bm{x})
+\end{equation}
+Onde $\mathcal{U}$ é a reserva de exemplos.
+
+\subsection{Amostragem por margem ou entropia - Mar ou Ent}\label{mar}
+Em problemas com mais de duas classes,
+o menor $P_{max}(\bm{x})$ pode não indicar o melhor exemplo.
+A medida de margem, apresentada nas Equações \ref{eqz} e \ref{eqmar},
+utiliza o valor da diferença entre as duas maiores probabilidades.
+Outra possibilidade é a medida de entropia normalizada
+\citep{journals/bioinformatics/LewinSA0P04}, apresentada na Equação \ref{eqent};
+onde $z(\bm{x})$ mapeia o exemplo $\bm{x}$ com sua classe correspondente.
+\begin{eqnarray} \label{eqz}
+\bm{z}(\bm{x})=\argmax_{\bm{y}\in Y}P(\bm{y}|\bm{x})
+\\
+M(\bm{x})=P(\bm{z}(\bm{x})|\bm{x})-\max_{\bm{y}\in Y\setminus\{\bm{z}(\bm{x})\}}P(\bm{y}|\bm{x})
+\label{eqmar}
+\end{eqnarray}
+\begin{equation} \label{eqent}
+E(\bm{x})=-\log^{-1}|Y|\sum_{\bm{y}\in Y}P(\bm{y}|\bm{x})\log P(\bm{y}|\bm{x})
+\end{equation}
+
+% \subsection{Margem simples - SVM}
+% A estratégia de amostragem por margem pode ser estendida para espaços de
+% atributos $\mathcal{F}$ transformados por uma \ing{função núcleo}{kernel function}.
+% Essa foi a abordagem de \cite{journals/jmlr/TongK01} para SVMs,
+% cuja variante mais empregada é
+% chamada \ing{margem simples}{simple margin} (SVMsim).
+% Ela consiste em selecionar o exemplo mais próximo do hiperplano que é a fronteira de decisão
+% que divide linearmente o espaço $\mathcal{F}$.
+% 
+% \subsection{Balanceamento exploração-prospecção - SVM}
+% A natureza puramente prospectiva da amostragem por margem simples tem o viés de enfocar
+% prioritariamente a fronteira de decisão, deixando de explorar as demais regiões do espaço
+% $\mathcal{F}$.
+% Por esse motivo, \cite{conf/icdm/OsugiKS05} propuseram um balanceamento entre prospecção
+% e a exploração realizada pelo algoritmo de se escolher \ing{primeiro os mais distantes pelo núcleo}
+% {Kernel Farthest First} (KFF).
+% A heurística de se adotar os mais distantes primeiro, sem a transformação pelo núcleo,
+% foi usada previamente para calcular agrupamentos aproximadamente ótimos
+% \citep{Hochbaum1985}.
+
+% O algoritmo de balanceamento exploração-prospecção (SVMbal) inicia com a aplicação do KFF.
+% Seu primeiro exemplo é aleatório e o segundo é seu par mais distante.
+% Esse par consiste no conjunto inicial que vai ser estendido com exemplos,
+% um a um, da mesma maneira que o segundo foi escolhido.
+% Esse processo exploratório é alternado com a estratégia de margem simples
+% de acordo com uma probabilidade definida em função da distância entre as predições
+% % para todos os exemplos
+% antes e depois da última consulta.
+
+\subsection{Consulta por comitê - QBC}\label{qbc}
+Comitês são combinações de modelos com o objetivo de superar as predições de
+modelos únicos.
+Em aprendizado ativo tem-se interesse no grau de desacordo entre os membros
+\citep{conf/icml/AbeM98}.
+A divergência de Jensen-Shannon \cite{journals/tit/Lin91} é uma medida
+comumente utilizada em comitês para
+avaliar o grau de desacordo \cite{Melville:2004:DEA:1015330.1015385}.
+A divergência não-ponderada de Jensen-Shannon é definida em termos da
+entropia das distribuições
+na Equação \ref{js}.
+\begin{equation}\label{js}
+ JS(\{\theta^{(m)} \forall m \in Y\}) = E(\sum_{m \in Y}{P(\theta^{(m)},\bm{x})}) - \sum_m{E(P(\theta^{(m)},\bm{x})})
+\end{equation}
+Onde $\theta^{(m)}$ é o modelo membro de número $m$.
+Quanto maior o valor de $JS$, mais distante os membros estão de um consenso.
+Assim, o exemplo com o maior valor deve ser consultado primeiro.
+
+\subsection{Busca no espaço de hipóteses - SG}\label{sgnet}
+A intuição da busca no espaço de hipóteses é que os exemplos mais importantes
+residem na região onde as hipóteses se contradizem.
+Isso equivale a consultar os exemplos que reduziriam o espaço de versões
+\citep{books/daglib/0087929} depois de inseridos no conjunto de treinamento.
+A busca no espaço de hipóteses é feita pelo acompanhamento das hipóteses
+mais específicas e as mais gerais pertencentes aos conjuntos $S$ e $G$ de todas
+as hipóteses possíveis,
+denominadas $h_S \in S$ e $h_G \in G$, respectivamente \cite{journals/ml/CohnAL94}.
+% Ele faz uma aproximação para ser capaz de induzir os modelos específico
+% $\theta_S$ e geral $\theta_G$, pois a quantidade de hipóteses possível pode ser infinita.
+% A aproximação é feita pela geração ou amostragem de \ing{exemplos de fundo}{background instances}
+% e rotulação artificial deles de acordo com a meta desejada de treinamento:
+% especificidade ou generalidade.
+% Depois de criados os modelos iniciais, eventuais exemplos que causem desacordo entre $\theta_S$ e $\theta_G$
+% são selecionados para consulta.
+
+
+\subsection{Redução do erro esperado - EER}
+A estratégia de redução de erro é um método que busca pelo exemplo que mais
+reduz uma função objetivo, por exemplo a entropia, na predição geral do modelo 
+para todo o conjunto de dados \citep{conf/ijcai/GuoG07}.
+Para cada exemplo candidato com vetor descritivo $\bm{x}$
+obtido da reserva $\mathcal{U}$, sua classe mais provável,
+representada pelo vetor preditivo $\bm{y}'$, é calculada de forma
+otimista:
+\begin{equation}
+ \bm{y}' = \argmin_{\bm{y}}{\sum_{\bm{u} \in \mathcal{U}} O(\bm{x}, \theta_{\mathcal{L}\cup
+\{\langle\bm{u},y\rangle\}})}
+\end{equation}
+onde $O$ é a função objetivo e $\mathcal{L}$ é a parcela já rotulada da reserva de
+exemplos.
+
+\subsection{Impacto esperado no modelo - EMC}
+O futuro impacto de um exemplo sobre o modelo,
+chamado de \ing{mudança esperada no modelo}{expected model change},
+é uma indicação de sua possível contribuição para o aprendizado e
+pode ser obtido na variação do gradiente de uma rede neural, por exemplo
+\cite{conf/nips/SettlesCR07}.
+% A maneira proposta por  é chamada
+% de \ing{comprimento esperado do gradiente}{expected gradient length} (EGL).
+% Ela se aplica a modelos baseados na técnica de gradiente descendente \citep{haykin2004comprehensive}:
+% deve ser escolhido para treinamento o exemplo capaz de contribuir com uma descida de maior magnitude
+% na curva de erro.
+Como o rótulo não é sabido de antemão,
+usa-se a soma das contribuições de cada rótulo ponderada pelas respectivas
+probabilidades condicionais.
+
+\subsection{Amostragem ponderada por densidade - DW}\label{dw}
+As amostragens ponderadas por densidade utilizam a medida de
+\textit{densidade de informação}, que atribui diferentes pesos à medida de
+informatividade $Inf(\bm{x})$ conforme o nível de concentração de exemplos não rotulados
+no entorno de $\bm{x}$ dado por uma medida de similaridade $sim(\bm{x},\bm{u})$ \citep{settles2008curious}:
+\begin{equation}\label{eqid}
+ ID(\bm{x}) = Inf(\bm{x})\frac{1}{|\mathcal{U}|} \sum_{\bm{u} \in \mathcal{U}} sim(\bm{x},\bm{u})
+\end{equation}
+Uma melhoria é o acréscimo da \textit{utilidade de treinamento}
+\citep{journals/coling/FujiiITT98},
+que é a densidade de informação inversamente ponderada pela concentração
+de exemplos rotulados:
+\begin{equation}\label{eqtu}
+ TU(\bm{x}) = ID(\bm{x}) (\sum_{\bm{l} \in \mathcal{L}} sim(\bm{x},\bm{l}))^{-1}
+\end{equation}
+Qualquer medida de similaridade e de informatividade podem ser adotadas.
+% Neste trabalho, $Inf(\bm{x}) = 1 - M$ e três medidas de distância $d(\bm{x},\bm{u})$
+% (euclidiana, Manhattan e Mahalanobis) foram transformadas em medidas de similaridade
+% $sim(\bm{x},\bm{u})$ pela fórmula \ref{eq:sim}.
+% \begin{equation}\label{eq:sim}
+%  sim(\bm{x},\bm{u}) = \frac{1}{1 + d(\bm{x},\bm{u})}
+% \end{equation}
+
+\subsection{Amostragem por agrupamento - Clu}
+A amostragem por agrupamento explora agrupamentos naturais na reserva de
+exemplos \cite{journals/tcs/Dasgupta11}.
+Essa abordagem é uma alternativa à realização de consultas que enfocam a
+fronteira de decisão ou o manejo de hipóteses citados anteriormente.
+Uma importante representante desse paradigma é 
+baseada em agrupamento hierárquico.
+O método de agrupamento hierárquico \citep{journals/cj/Murtagh83} 
+organiza os exemplos numa hierarquia que pode ser representada por uma árvore.
+A amostragem hierárquica faz uso da árvore para definir a relevância dos exemplos.
+Eles têm maior probabilidade de serem consultados se pertencerem aos grupos
+mais impuros e estatisticamente representativos.

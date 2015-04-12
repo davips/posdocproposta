@@ -1,0 +1,817 @@
+\documentclass[12pt]{report}
+\usepackage{etex}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%\usepackage[english]{babel}
+
+% \usepackage{cite}
+% \usepackage[pdftex]{graphicx}
+% \usepackage{array}
+\usepackage{amsmath}
+\usepackage{wasysym}
+% \usepackage{mathtools}
+
+% \usepackage{bm}
+% \usepackage{stmaryrd}
+% \usepackage[tight,footnotesize]{subfigure}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\sk}{sk}
+\DeclareMathOperator*{\ku}{ku}
+\DeclareMathOperator*{\val}{val}
+\DeclareMathOperator*{\nom}{nom}
+\DeclareMathOperator*{\av}{av}
+\DeclareMathOperator*{\sd}{sd}
+\DeclareMathOperator*{\en}{en}
+\DeclareMathOperator*{\co}{co}
+\DeclareMathOperator*{\dime}{dim}
+
+\newcommand{\meutitulo}{Aprendizado ativo ... }
+\newcommand{\meunome}{Davi Pereira dos Santos}
+\newcommand{\meuorientador}{Prof. Dr. André Carlos Ponce de Leon Ferreira de Carvalho}
+\newcommand{\minhadata}{Dezembro/2014}
+\newcommand{\minhabolsa}{Trabalho realizado com o apoio da CAPES.}
+\newcommand{\meugrau}{Doutor}
+
+%portugues
+\usepackage[ruled,linesnumbered,vlined]{algorithm2e}
+\usepackage{fancyhdr}
+
+\usepackage{ textcomp }
+
+%\renewcommand{\listalgorithmcfname}{Lista de Algoritmos}%
+%\renewcommand{\algorithmcfname}{Algoritmo}%
+\usepackage[english,brazil]{babel}
+\usepackage{subfigure}
+%%\usepackage{epigraph}
+%%\usepackage{endnotes}
+%\renewcommand{\notesname}{Comentários}
+\usepackage{natbib}
+\usepackage{latexsym}
+\usepackage{setspace}
+\usepackage{xspace}
+% \usepackage[nohyperlinks]
+%%% referencias com página \vref
+\usepackage[brazil]{varioref}
+\usepackage{indentfirst}
+%%% figuras um ao lado do outro
+\usepackage{subfigure}
+%%% definir títulos de seção
+\usepackage[sf,sl,outermarks]{titlesec}
+\titleformat{\section}{\color{black}\normalfont\Large\bfseries}{\color{darkgray}\thesection}{1em}{}
+\titleformat{\subsection}{\color{black}\normalfont\bfseries}{\color{darkgray}\thesubsection}{1em}{}
+
+%%% boxes
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage[usenames,dvipsnames]{color}
+%\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+\usepackage[pdftex]{geometry}
+  \geometry{a4paper,left=3cm,right=2cm,top=2.0cm,bottom=2cm,twoside}
+
+%%% cria links no arquivo .pdf
+%%% comentar as linhas na versão para impressao
+\usepackage[pdftex,pdfpagelabels,pagebackref,pageanchor=false]{hyperref}
+
+% % Para imprimir PDFs com offset
+% \begin{document}
+% \begin{figure} %[H]
+%     \centering
+%     \includegraphics[bb=640 0 0 850]{/home/davi/12.pdf}
+% %     \caption{\textit{Generative ensembles}}
+% %     \label{gen}
+% \end{figure}
+% \end{document}
+
+
+\usepackage{pdfpages}
+\usepackage{multirow}
+\usepackage{makecell}
+\hypersetup{
+    pdftitle = {\meutitulo},
+    pdfsubject = {},
+    pdfkeywords = {},
+    pdfauthor = {\meunome}
+    }
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,hypertexnames=false}
+% \usepackage[adobe-utopia]{mathdesign} %pacote texlive-fonts-extra no ubuntu
+\usepackage{ae}
+% \usepackage{bookman}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\DeclareFixedFont{\numberfont}{T1}{phv}{bx}{n}{2cm}
+\titleformat{\chapter}[display]
+  {\normalfont\Large\sffamily
+  }
+  {%\titlerule[3pt]%
+   \filright
+   \rule[32pt]{.7\linewidth}{4pt}
+   \hspace{-11pt}
+   \shadowbox{
+   \begin{minipage}{.18\linewidth}
+     \begin{center}
+       \textsc{\Large\chaptertitlename}\\
+       \vspace{1ex}
+       {\numberfont\color[gray]{0.5} \thechapter}\\
+       \vspace{1ex}
+     \end{center}
+   \end{minipage}}
+  }
+  {0pt}
+  {\filcenter
+   \Huge
+   }
+  [\hfill\rule{.8\textwidth}{0.5pt}\\
+     \vskip-1.8ex\hfill\rule{.7\textwidth}{3pt}]
+
+\newcommand{\versal}[1]{{\noindent
+    \setbox0\hbox{\largefont #1 }%
+    \count0=\ht0                   % height of versal
+    \count1=\baselineskip          % baselineskip
+    \divide\count0 by \count1      % versal height/baselineskip
+    \dimen1 = \count0\baselineskip % distance to drop versal
+    \advance\count0 by 1\relax     % no of indented lines
+    \dimen0=\wd0                   % width of versal
+    \global\hangindent\dimen0      % set indentation distance
+    \global\hangafter-\count0      % set no of indented lines
+    \hskip-\dimen0\setbox0\hbox to\dimen0{\raise-\dimen1\box0\hss}%
+    \dp0=0in\ht0=0in\box0}}
+
+\definecolor{dark-green}{rgb}{0,0.5,0}
+\newcommand{\X}{X\xspace}
+\newcommand{\Y}{Y\xspace}
+\newcommand{\xt}{\bm{x}_{(t)}\xspace}
+\newcommand{\x}{\bm{x}\xspace}
+\newcommand{\yt}{\bm{y}_{(t)}\xspace}
+\newcommand{\y}{\bm{y}\xspace}
+\newcommand{\pool}{reserva de exemplos\xspace}
+\newcommand{\pools}{reservas de exemplos\xspace}
+\newcommand{\U}{\mathcal{U}\xspace}
+\newcommand{\Ut}{\U_{(t)}\xspace}
+\newcommand{\Lt}{\mathcal{L}_{(t)}\xspace}
+\newcommand{\tra}[2]{\underline{#1}\xspace\footnote{\textit{#2}\xspace}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}\xspace}
+\newcommand{\red}[1]{\textcolor{red}{#1}\xspace}
+\newcommand{\green}[1]{\textcolor{dark-green}{#1}\xspace}
+\newcommand{\esb}[1]{\blue{#1}\xspace}
+\newcommand{\ano}[1]{\red{[$\star$ #1 $\star$]}\xspace}
+\newcommand{\tar}[1]{\green{$\star$ #1}\xspace}
+\newcommand{\versionspace}{espaço de versões\xspace}
+
+\newcommand{\ing}[2]{\emph{#1}\footnote{\textit{#2}}}
+\newcommand{\novo}[1]{\emph{#1}}
+\newcommand{\eer}{redução do erro esperado\xspace}
+\newcommand{\Eer}{Redução do erro esperado\xspace}
+\newcommand{\elms}{\textit{máquinas extremas}\xspace}
+\newcommand{\elm}{\textit{máquina extrema}\xspace}
+\newcommand{\svm}{máquina de vetores de suporte\xspace}
+\newcommand{\bom}[1]{\textcolor{blue}{\textbf{#1}}\xspace}
+\newcommand{\bomd}[1]{\textbf{#1}\xspace}
+\newcommand{\ruim}[1]{\textcolor{red}{\textbf{#1}}\xspace}
+
+\newcommand{\tarefa}[1] {\addcontentsline{toc}{section}{\tar{#1}}}
+
+
+
+
+
+
+
+\newcommand{\emphFirst}[1] {\textbf{#1}}
+
+\renewcommand{\reftextfacebefore}{}
+\renewcommand{\reftextfaceafter}{}
+
+\newcommand{\mx}{\hbox{\textbf{x}}\xspace}
+\newcommand{\smx}{\hbox{{\scriptsize \textbf{x}}}\xspace}
+
+\newcommand{\ranking}{\hbox{\textit{ranking}}\xspace}
+
+
+
+% Backref com colocação de "Citado na página..."
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{
+    \ifcase #1
+        Não citado no texto.
+    \or
+        Citado na página~#2.
+    \else
+        Citado nas páginas #2.
+    \fi
+}
+
+\renewcommand{\backreftwosep}{ e~}
+\renewcommand{\backreflastsep}{, e~}
+
+
+\hyphenation{su-per-vi-sio-na-dos}
+\hyphenation{su-per-vi-sio-na-do}
+
+
+\newcommand{\gnuplot}{\textbf{GnuPlot$^{TM}$}\xspace}
+\newcommand{\tfidf}{\textit{tfidf}\xspace}
+\newcommand{\tflinear}{\textit{tflinear}\xspace}
+
+
+
+
+\newcommand{\smooth}{\emph{smooth}\xspace}
+
+\newcommand{\stempl}{\textbf{stem.pl}\xspace}
+\newcommand{\reportpl}{\textbf{report.pl}\xspace}
+\newcommand{\predictpl}{\textbf{predict.pl}\xspace}
+\newcommand{\stembase}{\textbf{stembase}\xspace}
+\newcommand{\textbase}{\textbf{textbase}\xspace}
+\newcommand{\stoplist}{\textbf{stoplist}\xspace}
+
+
+\newcommand{\sone}{\texttt{\%one\%}\xspace}
+\newcommand{\stwo}{\texttt{\%two\%}\xspace}
+\newcommand{\sthree}{\texttt{\%three\%}\xspace}
+\newcommand{\sglobal}{\texttt{\%global\%}\xspace}
+\newcommand{\stm}{\textit{stemming}\xspace}
+\newcommand{\stemming}{\textit{stemming}\xspace}
+\newcommand{\gram}{\textit{gram}\xspace}
+\newcommand{\grams}{\textit{grams}\xspace}
+
+\newcommand{\stems}{\textit{stems}\xspace}
+\newcommand{\stem}{\textit{stem}\xspace}
+\newcommand{\pretext}{\textsc{PreTexT}\xspace}
+\newcommand{\script}{\textit{script}\xspace}
+\newcommand{\scripts}{\textit{scripts}\xspace}
+\newcommand{\stoplists}{\textit{stoplists}\xspace}
+\newcommand{\stopfile}{\textit{stopfile}\xspace}
+\newcommand{\stopfiles}{\textit{stopfiles}\xspace}
+\newcommand{\stopword}{\textit{stopword}\xspace}
+\newcommand{\stopwords}{\textit{stopwords}\xspace}
+
+
+% experimentos
+\newcommand{\news}{{\sc news}\xspace}
+\newcommand{\course}{{\sc course}\xspace}
+\newcommand{\lnai}{{\sc lnai}\xspace}
+\newcommand{\ccourse}{{\tt course}\xspace}
+\newcommand{\cncourse}{{\tt non-course}\xspace}
+\newcommand{\sci}{{\tt sci}\xspace}
+\newcommand{\talk}{{\tt talk}\xspace}
+\newcommand{\texto}{\textsc{texto}\xspace}
+\newcommand{\links}{\textsc{links}\xspace}
+
+\newcommand{\cbr}{\textsc{cbr}\xspace}
+\newcommand{\ilp}{\textsc{ilp}\xspace}
+
+
+
+
+
+\newcommand{\kmeanski}
+  {$k$-{\it means}$_{ki}$\xspace}
+
+\newcommand{\kmeans}
+  {$k$-me\-ans\xspace}
+
+
+\newcommand{\clustering}
+  {\textit{clustering}\xspace}
+
+
+
+\newcommand{\kparticoes}
+  {$k$-partições\xspace}
+
+\newcommand{\coboosting}
+  {\textsc{CO-BOOSTING}\xspace}
+
+\newcommand{\boosting}
+  {{\em Boosting}\xspace}
+
+
+\newcommand{\bagging}
+  {{\em Bagging}\xspace}
+
+\newcommand{\naivebayes}
+  {\emph{Naive Bayes}\xspace}
+
+\newcommand{\bayes}
+  {{\em Bayes}\xspace}
+
+\newcommand{\framework}
+  {\textsc{framework}\xspace}
+
+
+% bullet
+\newcommand{\bb}
+  {\ensuremath{\bullet}}
+
+% neck
+\newcommand{\neck}
+  {{\texttt{\bf\ :-\ }}}
+
+% circ
+\newcommand{\cc}
+  {\ensuremath{\circ}}
+
+% diamond
+\newcommand{\dd}
+  {\ensuremath{\diamond}}
+
+% MLC++
+\newcommand{\mlc}
+  {\ensuremath{\mathcal{MLC\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}\xspace}
+
+% MySQL
+\newcommand{\mysql}
+%  {{\sc \smaller MySQL}\xspace}
+  {\ensuremath{\mathcal{M}{\sf y}\mathcal{SQL}}\xspace}
+
+% C++
+\newcommand{\cplusplus}
+  {\ensuremath{\mathcal{C\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}\xspace}
+
+% C++
+\newcommand{\cpp}
+  {\cplusplus}
+
+% CI
+\newcommand{\ci}
+  {\ensuremath{\mathcal{CI}}\xspace}
+%  {{\sc ci}\xspace}
+
+% ID3
+\newcommand{\idtree}
+%  {{\sc id\relsize{-2}3}\xspace}
+  {\ensuremath{\mathcal{ID}3}\xspace}
+
+% GID3*
+\newcommand{\gidtree}
+  {{\sc gid\relsize{-2}3*}\xspace}
+
+% Skicat
+\newcommand{\skicat}
+  {{\sc \smaller Skicat}\xspace}
+
+% PBM
+%\newcommand{\pbm}
+ % {{\sc \smaller pbm}\xspace}
+
+%PBM
+\newcommand{\pbm}
+   {\ensuremath{\mathcal{PBM}}\xspace}
+
+% C4.5
+\newcommand{\cfourfive}
+%  {{\sc c\relsize{-2}4.5}\xspace}
+  {\ensuremath{\mathcal{C}4.5}\xspace}
+
+% C4.5rules
+\newcommand{\cfourfiverules}
+%  {{\sc c{\relsize{-2}4.5}rules}\xspace}
+  {\ensuremath{\mathcal{C}4.5{\sf rules}}\xspace}
+
+% C4.5-rules
+\newcommand{\cfourfiver}
+  {{\sc c{\relsize{-2}4.5}rules}\xspace}
+%  {\ensuremath{\mathcal{C}4.5{\sf rules}}\xspace}
+
+% C4.5r
+\newcommand{\cfourfiverr}
+  {{\sc c{\relsize{-2}4.5}r}\xspace}
+%  {\ensuremath{\mathcal{C}4.5{\sf r}}\xspace}
+
+% C5.0
+\newcommand{\cfive}
+%  {{\sc c\relsize{-2}5.0}\xspace}
+  {\ensuremath{\mathcal{C}5.0}\xspace}
+
+% See5
+%\newcommand{\seefive}
+%  {{\sc see\relsize{-2}5}\xspace}
+%  {\ensuremath{\mathcal{S}}{\sf ee5}\xspace}
+
+% See5
+\newcommand{\seefive}
+  {\ensuremath{\mathcal{S}}{\sf ee5}\xspace}
+
+
+% CN2
+\newcommand{\cntwo}
+ % {{\sc cn\relsize{-2}2}\xspace}
+  {\ensuremath{\mathcal{CN}2}\xspace}
+
+% OC1
+\newcommand{\ocone}
+%  {{\sc oc\relsize{-2}1}\xspace}
+  {\ensuremath{\mathcal{OC}1}\xspace}
+
+% T2
+%\newcommand{\ttwo}
+ % {{\sc t\relsize{-2}2}\xspace}
+
+% MC4
+%\newcommand{\mcfour}
+ % {{\sc mc\relsize{-2}4}\xspace}
+
+%MC4
+\newcommand{\mcfour}
+  {\ensuremath{\mathcal{MC}4}\xspace}
+
+%T2
+\newcommand{\ttwo}
+  {\ensuremath{\mathcal{T}2}\xspace}
+
+% RIPPER
+\newcommand{\ripper}
+%  {{\sc ripper}\xspace}
+  {\ensuremath{\mathcal{R}}{\sc \em ipper}\xspace}
+
+% Progol
+\newcommand{\progol}
+  {{\sc progol}\xspace}
+
+% Naive Bayes
+\newcommand{\nb}
+  {{\sc nb}\xspace}
+
+% Instance Based
+\newcommand{\ib}
+  {{\sc ib}\xspace}
+
+% Labic
+\newcommand{\labic}
+  {{\sc labic}\xspace}
+
+% Ruler
+\newcommand{\ruler}
+  {{\sc ruler}\xspace}
+
+% Xruler
+\newcommand{\xruler}
+  {{\sc xruler}\xspace}
+
+% Discover
+\newcommand{\discover}
+  {\textsc{Discover}}
+
+% perl
+\newcommand{\perl}
+  {{\sc perl}\xspace}
+
+
+% O-BTree
+\newcommand{\obtree}
+  {{\sc o-btree}\xspace}
+
+% Focas
+\newcommand{\focas}
+  {{\sc focas}\xspace}
+
+% Focus
+\newcommand{\focus}
+  {{\sc focus}\xspace}
+
+% Relief
+\newcommand{\relief}
+  {{\sc relief}\xspace}
+
+
+% Foil
+\newcommand{\foil}
+  {{\sc foil}\xspace}
+
+% CART
+\newcommand{\cart}
+  {{\sc cart}\xspace}
+
+% BibTeX
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}\xspace}
+% BibTeX
+\def\bibtex{\BibTeX}
+
+% BibView
+\def\BibView{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    V\kern-.1667em\hbox{\sc iew}}\xspace}
+\def\bibview{\BibView}
+
+% Nro
+\newcommand{\nro}
+  {\scriptsize $^{\b{o}}$\normalsize\xspace}
+
+% Nra
+\newcommand{\nra}
+  {\scriptsize $^{\b{a}}$\normalsize\xspace}
+
+% e.g.
+\newcommand{\eg}
+  {{\em e.g.}\/\xspace}
+
+% i.e.
+\newcommand{\ie}
+  {{\em i.e.}\/\xspace}
+
+% trademark
+\newcommand{\TM}
+  {\footnotesize\ensuremath{^{\rm TM}}\normalsize\xspace}
+\newcommand{\tm}
+  {\TM}
+
+%\newcommand{\IF}
+%  {{\bf IF}\xspace}
+\newcommand{\THEN}
+  {{\bf THEN}\xspace}
+% and
+\newcommand{\AND}
+  {{\bf AND}\xspace}
+% proc
+\newcommand{\PROC}
+  {{\bf procedure}\xspace}
+% return
+\newcommand{\RETURN}
+  {{\bf return}\xspace}
+% in
+\newcommand{\IN}
+  {{\bf in}\xspace}
+% in
+\newcommand{\REM}[1]
+  {\hspace*{1cm}{\em // #1}\xspace}
+
+
+% Palavras em ingles
+%\newcommand{\engl}[1]
+%  {{\em#1}}
+%  {\selectlanguage{english}{\em#1}\selectlanguage{brazil}}
+
+% URL
+%\newcommand{\url}[1]
+%  {{\tt #1}\xspace}
+
+\newcommand{\ip}[2]
+  {(#1, #2)}
+
+\newcommand{\seq}[3][X,1,n]
+  {\lbrace #1_{#2},\ldots,\,#1_{#3} \rbrace}
+
+\newcommand{\cartesiano}[3][X,1,n]
+  {#1_{#2} \times \ldots \times #1_{#3}}
+
+% entrada de indice simples
+\newcommand{\idxa}[1]
+  {#1\index{#1}}
+
+% entrada de indice dupla
+\newcommand{\idxb}[2]
+  {#1 #2\index{#1!#2}}
+
+% entrada de indice tripla
+\newcommand{\idxc}[3]
+  {#1 #2 #3\index{#1!#2!#3}}
+
+% PCTeX
+% figura x-size y-size filename extension label caption
+%          1      2       3        4         5      6
+
+% PCTeX
+% figura x-size y-size filename extension label caption
+%          1      2       3        4         5      6
+\newcommand{\figura}[6]
+{\begin{figure}[hbt]
+   \vspace*{0.5cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+%%% inclusão de figuras
+% \figurajpg{escala}{nome.extensao}{label}{caption}
+\newcommand{\figurajpg}[5]
+{\begin{figure}[!h]
+   \setlength{\unitlength}{1.0cm}
+   \centering
+     \includegraphics[scale=#1]{#2}
+   \caption{#3}
+   \label{#4}
+ \end{figure}
+}
+
+\newcommand{\figurajpgg}[5]
+{\begin{figure}[!hbt]
+   \setlength{\unitlength}{1.0cm}
+   \centering
+     \includegraphics[scale=#1]{#2}
+   \caption[#5]{#4}
+   \label{#3}
+ \end{figure}
+}
+
+%\newcommand{\figurac}[7]
+%{\begin{figure}[hbt]
+ %  \vspace*{0.5cm}
+ %  \setlength{\unitlength}{1.0cm}
+ %  \centering
+ %  \begin{picture}(#1, #2)(0, 0)
+ %    \special{#4:./#3.#4 x=#1cm y=#2cm}
+ %  \end{picture}
+ %  \caption[#7]{#6}
+ %  \label{#5}
+ %\end{figure}
+%}
+
+
+\newcommand{\figuraa}[6]
+{\begin{figure}
+%   \vspace*{1cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\figurah}[6]
+{\begin{figure}[htb]
+%   \vspace*{0.2cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\figuraH}[6]
+{\begin{figure}[H]
+%   \vspace*{0.2cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\figurat}[6]
+{\begin{figure}[tbh]
+%   \vspace*{1cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\figurab}[6]
+{\begin{figure}[bth]
+%   \vspace*{0.2cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\figurac}[7]
+{\begin{figure}[hbt]
+   \vspace*{0.5cm}
+   \setlength{\unitlength}{1.0cm}
+   \centering
+   \begin{picture}(#1, #2)(0, 0)
+     \special{#4:./#3.#4 x=#1cm y=#2cm}
+   \end{picture}
+   \caption[#7]{#6}
+   \label{#5}
+ \end{figure}
+}
+
+\newcommand{\myquotation}[2]{%
+  %\vspace{0.5ex}%
+  {\singlespacing
+    \footnotesize%
+    \begin{flushright}%
+      \begin{minipage}{.5\textwidth}%
+        {\sf \noindent \textcolor{RawSienna}{#1}}\\
+      \end{minipage}\\
+      \textit{\noindent \textcolor{RawSienna}{#2}}%
+    \end{flushright}}%
+  %\vspace{0.5ex}
+  }
+
+%\myquotation{``Smoking kills. If you're killed, you've lost a very important part of your life.''}{Brooke Shields.}
+
+
+
+% < x >
+\newcommand{\braces}[1]
+  {$<$#1$>$\xspace}
+
+% Palavras em ingles
+
+% | - ou
+\newcommand{\ou}
+   {$|$\xspace}
+
+% e-mail
+%\newcommand{\email}
+%   {\begingroup \urlstyle{tt}\Url}
+
+
+\newcommand{\inducer}[1]
+  {\ensuremath{\mathcal{I\hspace{-.05em}}^{#1}}\xspace}
+
+\newcommand{\dataset}[1]
+  {\ensuremath{\mathcal{D\hspace{-.05em}}^{#1}}\xspace}
+
+\newcommand{\classifier}[1]
+  {\ensuremath{\mathcal{C\hspace{-.05em}}^{#1}}\xspace}
+
+
+% \usepackage{parallel} % para as equações de medidas multilabel
+
+%%%%%%%%%%%%%%%% FORMATACAO DE PALAVRAS %%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\nf }[1] % nome de ferramenta
+    {\textsc{#1}}
+\newcommand{\pe }[1] % termo em inglês
+    {\textit{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ctable}
+\newcommand{\RAKEL}{{\emph {RAKEL}}\/\xspace}
+\newcommand{\win}{{+}\/\xspace}
+\newcommand{\lose}{{-}\/\xspace}
+\usepackage{amsmath}
+
+% \usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{cinzaclaro}{rgb}{0.84,0.84,0.84}
+\newcommand{\e}{\colorbox{cinzaclaro}}
+
+
+%inkscape svg auto refresh - adicionar -shell-escape na chamada de pdflatex
+% \newcommand{\executeiffilenewer}[3]{
+% \ifnum\pdfstrcmp{\pdffilemoddate{#1}}
+% {\pdffilemoddate{#2}}>0
+% {\immediate\write18{#3}}\fi
+% }
+% \newcommand{\includesvg}[1]{
+% \executeiffilenewer{#1.svg}{#1.pdf}
+% {inkscape -z -D --file=#1.svg
+% --export-pdf=#1.pdf --export-latex}
+% \input{#1.pdf_tex}
+% }
+
+% \pgfdeclareplotmark{v}{%
+%   \pgfpathmoveto{\pgfpoint{-\pgfplotmarksize}{\pgfplotmarksize}}
+%   \pgfpathlineto{\pgfpoint{0pt}{0pt}}
+%   \pgfpathlineto{\pgfpoint{\pgfplotmarksize}{\pgfplotmarksize}}
+%   \pgfusepathqstroke
+% }
+% \pgfdeclareplotmark{^}{%
+%   \pgfpathmoveto{\pgfpoint{-\pgfplotmarksize}{-\pgfplotmarksize}}
+%   \pgfpathlineto{\pgfpoint{0pt}{0pt}}
+%   \pgfpathlineto{\pgfpoint{\pgfplotmarksize}{-\pgfplotmarksize}}
+%   \pgfusepathqstroke
+% }
+
+\usepackage{amssymb}
+% \input{imagens/macros-pgf.tex}
+% \usepackage{glosstex}
+\usepackage[printonlyused,withpage]{acronym}
+
+\usepackage{doi}
+\usepackage{pbox}
+\usepackage{amsfonts}
+\usepackage{icomma}
+
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}
+
+\usepackage{pgfplots,bm}
+%\usetikzlibrary{plotmarks}
+\usetikzlibrary{scopes,shapes,shadows,calc,arrows,shapes.symbols,automata,decorations.pathmorphing,backgrounds,fit,positioning}
+
+\begin{document}
+\definecolor{darkgreen}{rgb}{0.0, 0.4, 0.0}
+\input documento
+\end{document}
